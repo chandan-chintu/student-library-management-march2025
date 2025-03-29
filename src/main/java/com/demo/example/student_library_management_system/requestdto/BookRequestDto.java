@@ -1,67 +1,21 @@
-package com.demo.example.student_library_management_system.model;
+package com.demo.example.student_library_management_system.requestdto;
 
 import com.demo.example.student_library_management_system.enums.Category;
-import jakarta.persistence.*;
-import org.hibernate.annotations.Columns;
 
-import java.util.List;
 
-@Entity
-@Table(name = "book")
-public class Book {
-    //id, title, pages, publisher name, publisedDate, edition,  category, price, rackNo, availability(true or false)
+public class BookRequestDto {
 
-    @Id
-    @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(name="title", nullable = false)
     private String title;
-
-    @Column(name="pages", nullable = false)
     private int pages;
-
-    @Column(name="publisher_name", nullable = false)
     private String publisherName;
-
-    @Column(name="published_date", nullable = false)
     private String publishedDate;
-
-    @Column(name="edition", nullable = false)
     private String edition;
-
-    @Column(name="category", nullable = false)
-    @Enumerated(value = EnumType.STRING)
     private Category category;
-
-    @Column(name="price", nullable = false)
     private double price;
-
-    @Column(name="rack_no", nullable = false)
     private String rackNo;
-
-    @Column(name="availability", nullable = false)
     private boolean availability;
-
-    @ManyToOne // Many books are written by one author
-    @JoinColumn
-    private Author author;
-
-    @JoinColumn
-    @ManyToOne
-    private Card card;
-
-    @OneToMany(mappedBy = "book")
-    private List<Transaction> transactionList;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private int authorId;
+    private int cardId;
 
     public String getTitle() {
         return title;
@@ -135,27 +89,19 @@ public class Book {
         this.availability = availability;
     }
 
-    public Author getAuthor() {
-        return author;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
-    public Card getCard() {
-        return card;
+    public int getCardId() {
+        return cardId;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
-    }
-
-    public List<Transaction> getTransactionList() {
-        return transactionList;
-    }
-
-    public void setTransactionList(List<Transaction> transactionList) {
-        this.transactionList = transactionList;
+    public void setCardId(int cardId) {
+        this.cardId = cardId;
     }
 }
