@@ -1,5 +1,6 @@
 package com.demo.example.student_library_management_system.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -38,6 +39,7 @@ public class Student {
     @Column(name="section", nullable = false)
     private String section;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL) // one student will have one card
     private Card card;
 

@@ -9,6 +9,9 @@ import com.demo.example.student_library_management_system.requestdto.StudentRequ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class StudentService {
 
@@ -31,5 +34,49 @@ public class StudentService {
         studentRepository.save(student);
         return "Student and card saved successfully";
 
+    }
+
+    public Student findStudentById(int id){
+        Optional<Student> studentOptional = studentRepository.findById(id);
+        if(studentOptional.isPresent()){
+            return studentOptional.get();
+        } else{
+            return null;
+        }
+    }
+
+    public List<Student>  getAllStudents(){
+       List<Student> studentList= studentRepository.findAll();
+       return studentList;
+    }
+
+    public String updateStudent(int id, StudentRequestDto studentRequestDto){
+        // find student with id
+
+        Student student = findStudentById(id);
+        // if id is present then perform update
+        if (student != null) {
+            student.setSection(studentRequestDto.getSection());
+            student.setAddress(studentRequestDto.getAddress());
+            student.setMobile(studentRequestDto.getMobile());
+            student.setEmail(studentRequestDto.getEmail());
+            student.setSem(studentRequestDto.getSem());
+            student.setDob(studentRequestDto.getDob());
+            student.setGender(studentRequestDto.getGender());
+            student.setName(studentRequestDto.getName());
+            student.setDept(studentRequestDto.getDept());
+
+            studentRepository.save(student);
+            return "Student updated successfully";
+        }
+        // else cannot update
+        else{
+            return "Student not found, cannot update";
+        }
+    }
+
+    public String deleteStudent(int id){
+        studentRepository.deleteById(id);
+        return "Student deleted successfully";
     }
 }
